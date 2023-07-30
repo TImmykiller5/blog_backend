@@ -19,20 +19,15 @@ class MyTOkenObtainPairSerializer(TokenObtainPairSerializer):
         'no_active_account': 'username or password is incorrect!'}
 
     def validate(self, attrs):
-        
-        try:
-            data = super().validate(attrs)
+        data = super().validate(attrs)
 
-            serializer = UserSerializerWithToken(self.user).data
-            # data['username'] = self.user.username
+        serializer = UserSerializerWithToken(self.user).data
+        # data['username'] = self.user.username
 
-            for k, v in serializer.items():
-                data[k] = v
+        for k, v in serializer.items():
+            data[k] = v
 
-            return data
-        except:
-            message = { 'no_active_account': 'username or password is incorrect!'}
-            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        return data
 
 
 class MytokenObtainPairView(TokenObtainPairView):
